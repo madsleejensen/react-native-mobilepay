@@ -3,12 +3,12 @@
 // Copyright (c) 2017 Facebook. All rights reserved.
 //
 
-#import "RNMobilePayManager.h"
+#import "RNMobilePay.h"
 #import "MobilePayManager.h"
 #import "RNMobilePayHandler.h"
 
 
-@implementation RNMobilePayManager {
+@implementation RNMobilePay {
 }
 
 RCT_EXPORT_MODULE();

@@ -7,6 +7,6 @@
 #import <React/RCTBridgeModule.h>
 
 
-@interface RNMobilePayManager : NSObject <RCTBridgeModule>
+@interface RNMobilePay : NSObject <RCTBridgeModule>
 
 @end
