@@ -6,21 +6,6 @@
 #import "RNMobilePay.h"
 #import "MobilePayManager.h"
 #import "RNMobilePayHandler.h"
-#import <React/RCTConvert.h>
-
-@interface RCTConvert (MobilePayCountry)
-@end
-
-@implementation RCTConvert (MobilePayCountry)
-RCT_ENUM_CONVERTER(
-   	MobilePayCountry,
-  	(@{
-		@"MobilePayCountry_Denmark": @(MobilePayCountry_Denmark),
-        @"MobilePayCountry_Norway": @(MobilePayCountry_Norway),
-        @"MobilePayCountry_Finland": @(MobilePayCountry_Finland)
-	}), MobilePayCountry_Denmark, integerValue
-)
-@end
 
 
 @implementation RNMobilePay {
@@ -71,6 +56,10 @@ RCT_EXPORT_METHOD(setMerchantId:(NSString *)merchantId)
 
 - (NSDictionary *)constantsToExport {
     return @{
+      @"CAPTURE_TYPE_CAPTURE": @(MobilePayCaptureType_Capture),
+      @"CAPTURE_TYPE_RESERVE": @(MobilePayCaptureType_Reserve),
+      @"CAPTURE_TYPE_PARTIALCAPTURE": @(MobilePayCaptureType_PartialCapture),
+             
       @"COUNTRY_DENMARK": @(MobilePayCountry_Denmark),
       @"COUNTRY_NORWAY": @(MobilePayCountry_Norway),
       @"COUNTRY_FINLAND": @(MobilePayCountry_Finland),
