@@ -6,7 +6,6 @@
 #import "RNMobilePayHandler.h"
 #import "MobilePayManager.h"
 
-
 @implementation RNMobilePayHandler {
     RCTPromiseResolveBlock _resolveBlock;
     RCTPromiseRejectBlock _rejectBlock;

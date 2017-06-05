@@ -19,6 +19,11 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
+RCT_EXPORT_METHOD(setup:(NSString *)merchantId merchantUrlScheme:(NSString *)merchantUrlScheme country:(NSString *)country)
+{
+    [[MobilePayManager sharedInstance] setupWithMerchantId:merchantId merchantUrlScheme:merchantUrlScheme country:country];
+}
+
 RCT_EXPORT_METHOD(createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
     [[RNMobilePayHandler sharedInstance] createPayment:orderId productPrice:productPrice resolve:resolve reject:reject];
@@ -51,6 +56,10 @@ RCT_EXPORT_METHOD(setMerchantId:(NSString *)merchantId)
 
 - (NSDictionary *)constantsToExport {
     return @{
+      @"COUNTRY_DENMARK": @"MobilePayCountry_Denmark",
+      @"COUNTRY_NORWAY": @"MobilePayCountry_Norway",
+      @"COUNTRY_FINLAND": @"MobilePayCountry_Finland",
+             
       @"isMobilePayInstalledDenmark": @([[MobilePayManager sharedInstance] isMobilePayInstalled:MobilePayCountry_Denmark]),
       @"isMobilePayInstalledNorway": @([[MobilePayManager sharedInstance] isMobilePayInstalled:MobilePayCountry_Norway]),
       @"isMobilePayInstalledFinland": @([[MobilePayManager sharedInstance] isMobilePayInstalled:MobilePayCountry_Finland]),
