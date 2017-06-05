@@ -1,5 +1,8 @@
 # react-native-mobilepay
 
+React-Native Bindings for Danske Bank Mobilepay AppSwitch https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK
+currently bundling version [1.8.1](https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK/tree/1.8.1) of Mobilepay AppSwitch SDK.
+
 ## Installation
 
 1. `npm i --save react-native-mobilepay`
