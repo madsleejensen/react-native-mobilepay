@@ -9,6 +9,10 @@
 @implementation RNMobilePayHandler {
     RCTPromiseResolveBlock _resolveBlock;
     RCTPromiseRejectBlock _rejectBlock;
+
+    NSString *_merchantId;
+    MobilePayCountry _country;
+    NSString *_merchantUrlScheme;
 }
 
 + (instancetype)sharedInstance {
@@ -20,6 +24,25 @@
     });
     
     return sharedInstance;
+}
+
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _merchantId = @"APPDK0000000000";
+        _country = MobilePayCountry_Denmark;
+        _merchantUrlScheme = @"";
+    }
+    
+    return self;
+}
+
+-(void)setup:(NSString *)merchantId country:(MobilePayCountry)country merchantUrlScheme:(NSString *)merchantUrlScheme {
+    _merchantId = merchantId;
+    _country = country;
+    _merchantUrlScheme = merchantUrlScheme;
+    
+    [[MobilePayManager sharedInstance] setupWithMerchantId:merchantId merchantUrlScheme:merchantUrlScheme country:country];
 }
 
 - (void)createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject
@@ -37,7 +60,7 @@
     }];
 }
 
-- (void)handleMobilePayPaymentWithUrl:(NSURL *)url
+- (bool)handleMobilePayPaymentWithUrl:(NSURL *)url
 {
     [[MobilePayManager sharedInstance] handleMobilePayPaymentWithUrl:url success:^(MobilePaySuccessfulPayment * _Nullable mobilePaySuccessfulPayment) {
         NSString *orderId = mobilePaySuccessfulPayment.orderId;
@@ -78,6 +101,8 @@
 
         [self cleanupHandlers];
     }];
+    
+    return true;
 }
 
 - (void)handleOnError:(NSError *)error {

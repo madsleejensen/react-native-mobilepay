@@ -5,12 +5,15 @@
 
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
+#import "MobilePayManager.h"
 
 
 @interface RNMobilePayHandler : NSObject
 
 + (instancetype)sharedInstance;
-- (void)handleMobilePayPaymentWithUrl:(NSURL *)url;
+
+- (void)setup:(NSString *)merchantId country:(MobilePayCountry)country merchantUrlScheme:(NSString *)merchantUrlScheme;
+- (bool)handleMobilePayPaymentWithUrl:(NSURL *)url;
 - (void)createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 
 @end
