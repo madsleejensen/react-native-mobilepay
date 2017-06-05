@@ -18,6 +18,7 @@ import java.util.Map;
 public class RNMobilePayModule extends ReactContextBaseJavaModule {
 
     private static final int MOBILEPAY_PAYMENT_REQUEST_CODE = 1001;
+    private boolean mHasBeenSetup = false;
     private String mMerchantId = "APPDK0000000000";
     private Country mCountry = Country.DENMARK;
     private Promise mPaymentPromise;
@@ -82,16 +83,20 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setup(String merchantId, String country) {
+    public void setup(String merchantId, String country, String merchantUrlScheme) {
         mMerchantId = merchantId;
 
         setCountry(country);
 
-        MobilePay.getInstance().init(merchantId, mCountry);
+        mHasBeenSetup = true;
     }
 
     @ReactMethod
     public void createPayment(String orderId, Double productPrice, Promise promise) {
+        if (!mHasBeenSetup) {
+            promise.reject("-1", "MobilePay has not been setup. Please call setup(merchantId, country, merchantUrlScheme) first.");
+        }
+
         // seems theres a bug in mobilepay SDK 1.8.1 where calling isMobilePayInstalled(..., country) will override the setup country.
         MobilePay.getInstance().init(mMerchantId, mCountry);
 
@@ -136,6 +141,11 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
     @Override
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
+
+        constants.put("CAPTURE_TYPE_CAPTURE", CaptureType.CAPTURE.name());
+        constants.put("CAPTURE_TYPE_RESERVE", CaptureType.RESERVE.name());
+        constants.put("CAPTURE_TYPE_PARTIALCAPTURE", CaptureType.PARTIAL_CAPTURE.name());
+
         constants.put("COUNTRY_DENMARK", Country.DENMARK.name());
         constants.put("COUNTRY_NORWAY", Country.NORWAY.name());
         constants.put("COUNTRY_FINLAND", Country.FINLAND.name());

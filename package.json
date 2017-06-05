@@ -2,16 +2,22 @@
 {
   "name": "react-native-mobilepay",
   "version": "1.0.0",
-  "description": "",
+  "description": "React-Native Bindings for Danske Bank Mobilepay AppSwitch iOS + Android",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
-    "react-native"
+    "react-native",
+    "mobilepay",
+    "danskebank",
+    "pay",
+    "mobilepay-appswitch",
+    "appswitch"
   ],
-  "author": "",
-  "license": "",
+  "author": {
+    "name": "Mads Lee Jensen",
+    "email": "madsleejensen@gmail.com",
+    "url": "http://mads-lee.dk"
+  },
+  "license": "since we bundle MobilePay-AppSwitch-SDK see: https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK/blob/master/LICENSE",
   "peerDependencies": {
     "react-native": "*"
   }
