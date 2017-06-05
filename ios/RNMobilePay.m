@@ -6,6 +6,21 @@
 #import "RNMobilePay.h"
 #import "MobilePayManager.h"
 #import "RNMobilePayHandler.h"
+#import <React/RCTConvert.h>
+
+@interface RCTConvert (MobilePayCountry)
+@end
+
+@implementation RCTConvert (MobilePayCountry)
+RCT_ENUM_CONVERTER(
+   	MobilePayCountry,
+  	(@{
+		@"MobilePayCountry_Denmark": @(MobilePayCountry_Denmark),
+        @"MobilePayCountry_Norway": @(MobilePayCountry_Norway),
+        @"MobilePayCountry_Finland": @(MobilePayCountry_Finland)
+	}), MobilePayCountry_Denmark, integerValue
+)
+@end
 
 
 @implementation RNMobilePay {
@@ -19,7 +34,7 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_METHOD(setup:(NSString *)merchantId merchantUrlScheme:(NSString *)merchantUrlScheme country:(NSString *)country)
+RCT_EXPORT_METHOD(setup:(NSString *)merchantId merchantUrlScheme:(NSString *)merchantUrlScheme country:(MobilePayCountry)country)
 {
     [[MobilePayManager sharedInstance] setupWithMerchantId:merchantId merchantUrlScheme:merchantUrlScheme country:country];
 }
@@ -56,9 +71,9 @@ RCT_EXPORT_METHOD(setMerchantId:(NSString *)merchantId)
 
 - (NSDictionary *)constantsToExport {
     return @{
-      @"COUNTRY_DENMARK": @"MobilePayCountry_Denmark",
-      @"COUNTRY_NORWAY": @"MobilePayCountry_Norway",
-      @"COUNTRY_FINLAND": @"MobilePayCountry_Finland",
+      @"COUNTRY_DENMARK": @(MobilePayCountry_Denmark),
+      @"COUNTRY_NORWAY": @(MobilePayCountry_Norway),
+      @"COUNTRY_FINLAND": @(MobilePayCountry_Finland),
              
       @"isMobilePayInstalledDenmark": @([[MobilePayManager sharedInstance] isMobilePayInstalled:MobilePayCountry_Denmark]),
       @"isMobilePayInstalledNorway": @([[MobilePayManager sharedInstance] isMobilePayInstalled:MobilePayCountry_Norway]),
