@@ -40,10 +40,23 @@ As of Xcode 7 and iOS9 SDK you must also whitelist the MobilePay URL scheme for 
 ```
 
 ####
-
-
+for more information see https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK
 
 ## Examples
+
+```javascript
+if (MobilePay.isMobilePayInstalledDenmark) {
+  console.log('MobilePay is available for Denmark')
+}
+
+if (MobilePay.isMobilePayInstalledNorway) {
+  console.log('MobilePay is available for Norway')
+}
+
+if (MobilePay.isMobilePayInstalledFinland) {
+  console.log('MobilePay is available for Finland')
+}
+```
 
 ```javascript
 import MobilePay from 'react-native-mobilepay'
@@ -53,4 +66,44 @@ const country = MobilePay.COUNTRY_DENMARK
 const merchantUrlScheme = 'fruitshop'
 
 MobilePay.setup(merchantId, country, merchantUrlScheme)
+```
+
+```javascript
+import MobilePay from 'react-native-mobilepay'
+
+const orderId = 'order-1234'
+const amount = 150
+
+MobilePay.createPayment(orderId, amount).then(
+  result => {
+    if (!result.isCancelled) {
+      console.log(`payment successful order-id: ${result.orderId} transaction-id: ${result.transactionId}`)
+    } else {
+      console.log(`payment was cancelled`)
+    }
+  },
+  error => {
+    console.log('payment failed', error)
+  }
+)
+```
+
+```javascript
+// change country to Norway
+MobilePay.setCountry(MobilePay.COUNTRY_NORWAY)
+// or Finland
+MobilePay.setCountry(MobilePay.COUNTRY_FINLAND)
+```
+
+```javascript
+MobilePay.setCaptureType(MobilePay.CAPTURE_TYPE_CAPTURE)
+MobilePay.setCaptureType(MobilePay.CAPTURE_TYPE_RESERVE)
+```
+
+```javascript
+// seconds that you allow the user to spend in the MobilePay app before returning to the merchant app, if exceeded when you try to swipe in Mobile Pay errorcode 8 is returned. Default is 0 = never timeout
+MobilePay.setTimeoutSeconds(60)
+
+// seconds spend on the MobilePay receipt screen before returning to the merchant app.
+MobilePay.setReturnSeconds(10)
 ```
