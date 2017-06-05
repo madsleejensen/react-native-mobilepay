@@ -43,6 +43,13 @@ As of Xcode 7 and iOS9 SDK you must also whitelist the MobilePay URL scheme for 
 }
 ```
 
+#### 3. Disable Bitcode
+current version of https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK does not support bitcode as discussed here: https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK/pull/9
+
+goto xcode buildsettings and disable `bitcode` under `build options`
+
+
+
 ####
 for more information see https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK
 
