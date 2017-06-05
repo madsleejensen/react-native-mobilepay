@@ -10,6 +10,7 @@
     RCTPromiseResolveBlock _resolveBlock;
     RCTPromiseRejectBlock _rejectBlock;
 
+    BOOL _hasBeenSetup;
     NSString *_merchantId;
     MobilePayCountry _country;
     NSString *_merchantUrlScheme;
@@ -41,6 +42,8 @@
     _merchantId = merchantId;
     _country = country;
     _merchantUrlScheme = merchantUrlScheme;
+    
+    _hasBeenSetup = true;
 }
 
 -(void)setCountry:(MobilePayCountry)country {
@@ -53,7 +56,7 @@
 
 - (void)createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject
 {
-    if (!_merchantId || !_merchantUrlScheme || !_country) {
+    if (!_hasBeenSetup) {
         reject(@"-1", @"MobilePay has not been setup. Please call setup(merchantId, country, merchantUrlScheme) first.", nil);
         return;
     }
