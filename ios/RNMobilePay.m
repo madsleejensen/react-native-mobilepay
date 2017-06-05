@@ -41,7 +41,7 @@ RCT_EXPORT_METHOD(setReturnSeconds:(int)seconds)
 
 RCT_EXPORT_METHOD(setCountry:(MobilePayCountry)county)
 {
-    [[MobilePayManager sharedInstance] setCountry:county];
+    [[RNMobilePayHandler sharedInstance] setCountry:county];
 }
 
 RCT_EXPORT_METHOD(setCaptureType:(MobilePayCaptureType)captureType)
@@ -51,7 +51,7 @@ RCT_EXPORT_METHOD(setCaptureType:(MobilePayCaptureType)captureType)
 
 RCT_EXPORT_METHOD(setMerchantId:(NSString *)merchantId)
 {
-    [[MobilePayManager sharedInstance] setMerchantId:merchantId];
+    [[RNMobilePayHandler sharedInstance] setMerchantId:merchantId];
 }
 
 - (NSDictionary *)constantsToExport {

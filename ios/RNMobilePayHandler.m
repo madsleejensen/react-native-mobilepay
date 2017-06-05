@@ -41,12 +41,25 @@
     _merchantId = merchantId;
     _country = country;
     _merchantUrlScheme = merchantUrlScheme;
-    
-    [[MobilePayManager sharedInstance] setupWithMerchantId:merchantId merchantUrlScheme:merchantUrlScheme country:country];
+}
+
+-(void)setCountry:(MobilePayCountry)country {
+    _country = country;
+}
+
+-(void)setMerchantId:(NSString *)merchantId {
+    _merchantId = merchantId;
 }
 
 - (void)createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject
 {
+    if (!_merchantId || !_merchantUrlScheme || !_country) {
+        reject(@"-1", @"MobilePay has not been setup. Please call setup(merchantId, country, merchantUrlScheme) first.", nil);
+        return;
+    }
+    
+    [[MobilePayManager sharedInstance] setupWithMerchantId:_merchantId merchantUrlScheme:_merchantUrlScheme country:_country];
+    
     MobilePayPayment *payment = [[MobilePayPayment alloc] initWithOrderId:orderId productPrice:productPrice];
 
     _resolveBlock = [resolve copy];
@@ -62,6 +75,10 @@
 
 - (bool)handleMobilePayPaymentWithUrl:(NSURL *)url
 {
+    if (![url.absoluteString hasPrefix:_merchantUrlScheme]) {
+        return false;
+    }
+    
     [[MobilePayManager sharedInstance] handleMobilePayPaymentWithUrl:url success:^(MobilePaySuccessfulPayment * _Nullable mobilePaySuccessfulPayment) {
         NSString *orderId = mobilePaySuccessfulPayment.orderId;
         NSString *transactionId = mobilePaySuccessfulPayment.transactionId;

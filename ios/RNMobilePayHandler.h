@@ -13,6 +13,9 @@
 + (instancetype)sharedInstance;
 
 - (void)setup:(NSString *)merchantId country:(MobilePayCountry)country merchantUrlScheme:(NSString *)merchantUrlScheme;
+- (void)setCountry:(MobilePayCountry)country;
+- (void)setMerchantId:(NSString *)merchantId;
+
 - (bool)handleMobilePayPaymentWithUrl:(NSURL *)url;
 - (void)createPayment:(NSString *)orderId productPrice:(float)productPrice resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
 
