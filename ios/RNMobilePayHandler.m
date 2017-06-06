@@ -91,8 +91,9 @@
         _resolveBlock(@{
             @"isCancelled": @NO,
             @"orderId": orderId,
+            @"amountWithdrawnFromCard": amountWithdrawnFromCard,
             @"transactionId": transactionId,
-            @"amountWithdrawnFromCard": amountWithdrawnFromCard
+            @"transactionSignature": mobilePaySuccessfulPayment.signature
         });
 
         [self cleanupHandlers];
