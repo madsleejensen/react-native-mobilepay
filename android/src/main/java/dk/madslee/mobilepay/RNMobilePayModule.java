@@ -36,6 +36,7 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
                         map.putBoolean("isCancelled", false);
                         map.putString("orderId", result.getOrderId());
                         map.putString("transactionId", result.getTransactionId());
+                        map.putString("transactionSignature", result.getSignature());
                         map.putDouble("amountWithdrawnFromCard", result.getAmountWithdrawnFromCard().doubleValue());
 
                         mPaymentPromise.resolve(map);
