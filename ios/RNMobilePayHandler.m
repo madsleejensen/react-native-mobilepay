@@ -100,7 +100,8 @@
     } error:^(NSError * _Nonnull error) {
         NSDictionary *dict = error.userInfo;
         NSString *errorMessage = [dict valueForKey:NSLocalizedFailureReasonErrorKey];
-        NSLog(@"MobilePay purchase failed:  Error code '%li' and message '%@'",(long)error.code,errorMessage);
+        NSLog(@"MobilePay purchase failed:  Error code '%li' and message '%@' %@",(long)error.code, errorMessage, error);
+
 
         //TODO: show an appropriate error message to the user. Check MobilePayManager.h for a complete description of the error codes
 
@@ -128,7 +129,8 @@
 
 - (void)handleOnError:(NSError *)error {
     if (_rejectBlock) {
-       _rejectBlock([NSString stringWithFormat:@"%d", error.code], error.localizedDescription, error);
+        NSString *message = [NSString stringWithFormat:@"%@: %@", error.localizedDescription, error.localizedFailureReason];
+       _rejectBlock([NSString stringWithFormat:@"%d", error.code], message, error);
     }
 }
 
