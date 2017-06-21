@@ -21,6 +21,9 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
     private boolean mHasBeenSetup = false;
     private String mMerchantId = "APPDK0000000000";
     private Country mCountry = Country.DENMARK;
+    private int mReturnSeconds = 1;
+    private int mTimeoutSeconds = 90;
+    private CaptureType mCaptyreType = CaptureType.CAPTURE;
     private Promise mPaymentPromise;
     private Payment mPayment;
 
@@ -99,7 +102,11 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
         }
 
         // seems theres a bug in mobilepay SDK 1.8.1 where calling isMobilePayInstalled(..., country) will override the setup country.
+        // to workaround we instead store all the config vars, and before each payment we initialize the mobilepay instance from scratch.
         MobilePay.getInstance().init(mMerchantId, mCountry);
+        MobilePay.getInstance().setCaptureType(mCaptyreType);
+        MobilePay.getInstance().setReturnSeconds(mReturnSeconds);
+        MobilePay.getInstance().setTimeoutSeconds(mTimeoutSeconds);
 
         mPaymentPromise = promise;
 
@@ -116,17 +123,17 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setTimeoutSeconds(int seconds) {
-        MobilePay.getInstance().setTimeoutSeconds(seconds);
+        mTimeoutSeconds = seconds;
     }
 
     @ReactMethod
     public void setReturnSeconds(int seconds) {
-        MobilePay.getInstance().setReturnSeconds(seconds);
+        mReturnSeconds = seconds;
     }
 
     @ReactMethod
     public void setCaptureType(String captureType) {
-        MobilePay.getInstance().setCaptureType(CaptureType.valueOf(captureType));
+        mCaptyreType = CaptureType.valueOf(captureType);
     }
 
     @ReactMethod
