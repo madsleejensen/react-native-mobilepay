@@ -2,6 +2,7 @@ package dk.madslee.mobilepay;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import com.facebook.react.bridge.*;
 import dk.danskebank.mobilepay.sdk.CaptureType;
 import dk.danskebank.mobilepay.sdk.Country;
@@ -146,6 +147,16 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
         mMerchantId = merchantId;
     }
 
+    @ReactMethod
+    public void isMobilePayInstalled(String country, final Callback successCb, final Callback failureCb) {
+        try {
+            Country mobilePayCountry = Country.valueOf(country);
+            successCb.invoke(MobilePay.getInstance().isMobilePayInstalled(getReactApplicationContext(), mobilePayCountry));
+        } catch (Exception e) {
+            failureCb.invoke(e.toString());
+        }
+    }
+
     @Override
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
@@ -158,9 +169,6 @@ public class RNMobilePayModule extends ReactContextBaseJavaModule {
         constants.put("COUNTRY_NORWAY", Country.NORWAY.name());
         constants.put("COUNTRY_FINLAND", Country.FINLAND.name());
 
-        constants.put("isMobilePayInstalledDenmark", MobilePay.getInstance().isMobilePayInstalled(getReactApplicationContext(), Country.DENMARK));
-        constants.put("isMobilePayInstalledNorway", MobilePay.getInstance().isMobilePayInstalled(getReactApplicationContext(), Country.NORWAY));
-        constants.put("isMobilePayInstalledFinland", MobilePay.getInstance().isMobilePayInstalled(getReactApplicationContext(), Country.FINLAND));
         return constants;
     }
 
