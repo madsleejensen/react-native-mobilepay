@@ -2,7 +2,6 @@ package dk.madslee.mobilepay;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 
 import com.facebook.react.bridge.*;
 import dk.danskebank.mobilepay.sdk.CaptureType;
