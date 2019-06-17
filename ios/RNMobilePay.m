@@ -19,6 +19,10 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
++ (BOOL)requiresMainQueueSetup {
+    return YES;
+}
+
 RCT_EXPORT_METHOD(setup:(NSString *)merchantId country:(MobilePayCountry)country merchantUrlScheme:(NSString *)merchantUrlScheme)
 {
     [[RNMobilePayHandler sharedInstance] setup:merchantId country:country merchantUrlScheme:merchantUrlScheme];

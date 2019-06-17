@@ -11,6 +11,10 @@
     "mobilepay-appswitch",
     "appswitch"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MobilePayDev/MobilePay-AppSwitch-SDK"
+  },
   "author": {
     "name": "Mads Lee Jensen",
     "email": "madsleejensen@gmail.com",
